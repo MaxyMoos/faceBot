@@ -32,6 +32,11 @@ def parse_slack_output(slack_rtm_output):
                 and output['file'].get('initial_comment')\
                 and output['file']['initial_comment'].get('comment'):
                 if "<@{}>".format(BOT_ID) in output['file']['initial_comment']['comment']:
+                    with open("./last_message_received.txt", 'w') as dump:
+                        dump.write(str(output))
+                    print("Processing request from user {} in channel {}".format(
+                        output['username'],
+                        output['channel']))
                     return output['file']['url_private_download'], output['channel']
     return None, None
 
